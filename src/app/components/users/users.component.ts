@@ -8,10 +8,21 @@ import { User } from '../../models/User';
   styleUrls: ['./users.component.css']
 })
 export class UsersComponent implements OnInit {
+  user: User = {
+    firstName: '',
+    lastName: '',
+    age: null,
+    address: {
+      street: '',
+      city: '',
+      state: ''
+    }
+  }
   users: User[];
   showExtended: boolean = true;
   loaded: boolean = false;
   enableAdd: boolean = false;
+  showUserForm: boolean = false;
 
   constructor() { }
 
@@ -21,13 +32,15 @@ export class UsersComponent implements OnInit {
         {
           firstName: 'John',
           lastName: 'Doe',
-          age: 30,
+          age: 70,
           address: {
             street: '50 Main st',
             city: 'Boston',
             state: 'MA'
           },
-          image: 'http://lorempixel.com/600/600/people/3'
+          isActive: true,
+          registered: new Date('01/02/2018 08:30:00'),
+          hide: true
         },
         {
           firstName: 'Kevin',
@@ -38,7 +51,9 @@ export class UsersComponent implements OnInit {
             city: 'Lynn',
             state: 'MA'
           },
-          image: 'http://lorempixel.com/600/600/people/2'
+          isActive: false,
+          registered: new Date('03/11/2017 06:20:00'),
+          hide: true
         },
         {
           firstName: 'Karen',
@@ -49,20 +64,46 @@ export class UsersComponent implements OnInit {
             city: 'Miami',
             state: 'FL'
           },
-          image: 'http://lorempixel.com/600/600/people/1'
+          isActive: true,
+          registered: new Date('11/02/2016 10:30:00'),
+          hide: true
         }
       ];
 
       this.loaded = true;
-
-      // this.addUser({
-      //   firstName: 'David',
-      //   lastName: 'Jackson'
-      // });
   }
 
-  addUser(user: User) {
-    this.users.push(user);
+  addUser() {
+    this.user.isActive = true;
+    this.user.registered = new Date();
+
+    this.users.unshift(this.user);
+
+    this.user = {
+      firstName: '',
+      lastName: '',
+      age: null,
+      address: {
+        street: '',
+        city: '',
+        state: ''
+      }
+    }
+  }
+
+  // toggleHide(user: User) {
+  //   user.hide = !user.hide;
+  // }
+
+  onSubmit(e) {
+    console.log(123);
+
+    e.preventDefault();
+  }
+
+  fireEvent(e) {
+    console.log(e.type);
+    console.log(e.target.value);
   }
   
 }
